@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrangeBus - Modern Design</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow">
+        <div class="container">
+            <a class="navbar-brand" href="#">ORANGE BUS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" ></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">My Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Offers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>  
+
+    <!-- Hero Section -->
+    <header class="bg-image text-white d-flex align-items-center justify-content-center"  style="background-image: url('https://img.freepik.com/free-vector/city-bus-concept-illustration_114360-11574.jpg?t=st=1736423399~exp=1736426999~hmac=a57b172e14625704a7fdaf3fb4bd8c39bcebee2d7be45b0371bf0702fead4a83&w=900'); height: 100vh;size: 50cm;">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold">Plan Your Journey</h1>
+            <p class="lead mb-4">Convenient and Affordable Bus Booking</p>
+            <a href="#search-section" class="btn btn-warning btn-lg shadow-sm">Search Buses</a>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <section id="search-section" class="py-5 bg-light shadow-sm">
+        <div class="container">
+            <h2 class="text-center mb-4">Find Your Bus</h2>
+            <form>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control form-control-lg" placeholder="From" required>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control form-control-lg" placeholder="To" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" class="form-control form-control-lg" required>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-danger btn-lg w-100">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Popular Routes -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Popular Routes</h2>
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <h5>Visakhapatna to Hyderabad</h5>
+                            <p class="text-muted">Starting at ₹999</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <h5>Mumbai to Goa</h5>
+                            <p class="text-muted">Starting at ₹499</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <h5>Chennai to Bangalore</h5>
+                            <p class="text-muted">Starting at ₹299</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="py-5 bg-warning">
+        <div class="container">
+            <h2 class="text-center text-white mb-4">Special Offers</h2>
+            <div class="row text-center g-4">
+                <div class="col-md-4">
+                    <div class="card bg-light border-0 shadow">
+                        <div class="card-body">
+                            <h5>Get 20% Off</h5>
+                            <p>Use Code: BUS20</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light border-0 shadow">
+                        <div class="card-body">
+                            <h5>Flat ₹100 Cashback</h5>
+                            <p>On First Booking</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light border-0 shadow">
+                        <div class="card-body">
+                            <h5>Group Discounts</h5>
+                            <p>For Bulk Bookings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p>&copy; 2025 Orangebus. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
