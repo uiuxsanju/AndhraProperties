@@ -7,16 +7,50 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom CSS */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --primary: #ff6f00;
+            --primary-dark: #e65100;
+            --secondary: #212529;
+            --light: #f8f9fa;
+            --danger: #dc3545;
         }
         
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        /* Navbar */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
         .bg-image {
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
+            min-height: 80vh;
         }
         
         .bg-image::before {
@@ -34,25 +68,90 @@
             z-index: 1;
         }
         
+        /* Cards */
         .card {
-            transition: transform 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: none;
         }
         
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
         
-        .navbar-brand {
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        
+        /* Buttons */
         .btn-warning {
-            color: #fff;
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
         }
         
-        footer {
-            background-color: #212529 !important;
+        .btn-warning:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn-outline-danger:hover {
+            color: white;
+        }
+        
+        /* Search Form */
+        .search-section {
+            background-color: var(--light);
+        }
+        
+        /* Modal (CSS-only) */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1050;
+        }
+        
+        .modal:target {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal:target .modal-content {
+            transform: translateY(0);
+        }
+        
+        /* Tabs (CSS-only) */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-input {
+            display: none;
+        }
+        
+        .tab-input:checked + .tab-label {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .tab-input:checked ~ .tab-content {
+            display: block;
         }
         
         /* Responsive adjustments */
@@ -64,14 +163,6 @@
             .search-section .col-md-4, 
             .search-section .col-md-3 {
                 margin-bottom: 15px;
-            }
-            
-            .search-section .col-md-1 {
-                width: 100%;
-            }
-            
-            .search-section button {
-                width: 100%;
             }
         }
         
@@ -101,7 +192,7 @@
                     <li class="nav-item"><a class="nav-link" href="#">Offers</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
                     <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                        <button class="btn btn-outline-light">Login/Signup</button>
+                        <a href="#loginModal" class="btn btn-outline-light">Login/Signup</a>
                     </li>
                 </ul>
             </div>
@@ -109,7 +200,7 @@
     </nav>  
 
     <!-- Hero Section -->
-    <header class="bg-image text-white d-flex align-items-center justify-content-center" style="background-image: url('https://img.freepik.com/free-vector/city-bus-concept-illustration_114360-11574.jpg'); min-height: 80vh;">
+    <header class="bg-image text-white d-flex align-items-center justify-content-center" style="background-image: url('https://img.freepik.com/free-vector/city-bus-concept-illustration_114360-11574.jpg');">
         <div class="container text-center hero-content">
             <h1 class="display-3 fw-bold mb-3">Plan Your Journey</h1>
             <p class="lead mb-4">Convenient and Affordable Bus Booking</p>
@@ -123,7 +214,7 @@
     <section id="search-section" class="py-5 bg-light shadow-sm">
         <div class="container">
             <h2 class="text-center mb-4">Find Your Bus</h2>
-            <form id="searchForm">
+            <form id="searchForm" action="#search-results">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
                         <label for="fromCity" class="form-label">From</label>
@@ -147,6 +238,17 @@
         </div>
     </section>
 
+    <!-- Search Results (Hidden until form submit) -->
+    <section id="search-results" class="py-5" hidden>
+        <div class="container">
+            <h2 class="text-center mb-4">Available Buses</h2>
+            <div class="alert alert-info">
+                Normally this would show real search results. This is a demo showing the form submission works.
+            </div>
+            <a href="#" class="btn btn-warning">Back to Search</a>
+        </div>
+    </section>
+
     <!-- Popular Routes -->
     <section class="py-5">
         <div class="container">
@@ -158,7 +260,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Visakhapatnam to Hyderabad</h5>
                             <p class="card-text text-muted">Starting at ₹999</p>
-                            <a href="#" class="btn btn-outline-danger">Book Now</a>
+                            <a href="#booking-form" class="btn btn-outline-danger">Book Now</a>
                         </div>
                     </div>
                 </div>
@@ -168,7 +270,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Mumbai to Goa</h5>
                             <p class="card-text text-muted">Starting at ₹499</p>
-                            <a href="#" class="btn btn-outline-danger">Book Now</a>
+                            <a href="#booking-form" class="btn btn-outline-danger">Book Now</a>
                         </div>
                     </div>
                 </div>
@@ -178,11 +280,22 @@
                         <div class="card-body">
                             <h5 class="card-title">Chennai to Bangalore</h5>
                             <p class="card-text text-muted">Starting at ₹299</p>
-                            <a href="#" class="btn btn-outline-danger">Book Now</a>
+                            <a href="#booking-form" class="btn btn-outline-danger">Book Now</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Booking Form (Hidden until Book Now clicked) -->
+    <section id="booking-form" class="py-5 bg-light" hidden>
+        <div class="container">
+            <h2 class="text-center mb-4">Complete Your Booking</h2>
+            <div class="alert alert-info">
+                Normally this would show a booking form. This is a demo showing the navigation works.
+            </div>
+            <a href="#" class="btn btn-warning">Back to Routes</a>
         </div>
     </section>
 
@@ -199,7 +312,7 @@
                             </div>
                             <h5 class="card-title">Get 20% Off</h5>
                             <p class="card-text">Use Code: BUS20</p>
-                            <a href="#" class="btn btn-sm btn-outline-warning">Apply Now</a>
+                            <a href="#offer-terms" class="btn btn-sm btn-outline-warning">Apply Now</a>
                         </div>
                     </div>
                 </div>
@@ -211,7 +324,7 @@
                             </div>
                             <h5 class="card-title">Flat ₹100 Cashback</h5>
                             <p class="card-text">On First Booking</p>
-                            <a href="#" class="btn btn-sm btn-outline-warning">Apply Now</a>
+                            <a href="#offer-terms" class="btn btn-sm btn-outline-warning">Apply Now</a>
                         </div>
                     </div>
                 </div>
@@ -223,11 +336,22 @@
                             </div>
                             <h5 class="card-title">Group Discounts</h5>
                             <p class="card-text">For Bulk Bookings</p>
-                            <a href="#" class="btn btn-sm btn-outline-warning">Apply Now</a>
+                            <a href="#offer-terms" class="btn btn-sm btn-outline-warning">Apply Now</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Offer Terms (Hidden until Apply Now clicked) -->
+    <section id="offer-terms" class="py-5" hidden>
+        <div class="container">
+            <h2 class="text-center mb-4">Offer Terms & Conditions</h2>
+            <div class="alert alert-info">
+                Normally this would show offer details. This is a demo showing the navigation works.
+            </div>
+            <a href="#" class="btn btn-warning">Back to Offers</a>
         </div>
     </section>
 
@@ -275,6 +399,61 @@
             </div>
         </div>
     </section>
+
+    <!-- Login Modal (CSS-only) -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <a href="#" class="close position-absolute end-0 me-3 mt-2 fs-2 text-decoration-none">&times;</a>
+            <div class="p-4">
+                <h3 class="text-center mb-4">Login / Signup</h3>
+                
+                <!-- Tabs -->
+                <div class="d-flex justify-content-center mb-4">
+                    <input type="radio" name="tabs" id="login-tab" class="tab-input" checked>
+                    <label for="login-tab" class="tab-label px-3 py-2">Login</label>
+                    
+                    <input type="radio" name="tabs" id="signup-tab" class="tab-input">
+                    <label for="signup-tab" class="tab-label px-3 py-2">Signup</label>
+                </div>
+                
+                <!-- Login Form -->
+                <div class="tab-content">
+                    <form>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100">Login</button>
+                    </form>
+                </div>
+                
+                <!-- Signup Form -->
+                <div class="tab-content">
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Full Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="tel" class="form-control" placeholder="Phone Number" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100">Create Account</button>
+                    </form>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <p class="small">By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-5">
@@ -335,22 +514,6 @@
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('travelDate').valueAsDate = tomorrow;
-            
-            // Form submission
-            document.getElementById('searchForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const fromCity = document.getElementById('fromCity').value;
-                const toCity = document.getElementById('toCity').value;
-                const travelDate = document.getElementById('travelDate').value;
-                
-                if (!fromCity || !toCity || !travelDate) {
-                    alert('Please fill all search fields');
-                    return;
-                }
-                
-                alert(`Searching buses from ${fromCity} to ${toCity} on ${travelDate}`);
-                // In a real app, you would redirect to search results or fetch data
-            });
         });
     </script>
 </body>
